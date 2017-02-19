@@ -13,12 +13,10 @@ def getipicnlable(dictionary,i,dodebug):
     imgmat=np.reshape(img,(32,32,3),order='F')
     imgmat=np.rot90(imgmat,-1)
     label=dictionary['labels'][i]
-
     if(dodebug==1):
         print(label)
         img = Image.fromarray(imgmat, 'RGB')
         img.show()
-
     return (imgmat, label)
 
 
