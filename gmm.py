@@ -11,8 +11,6 @@ def removemean(data,mean,no_of_examp):
 
 data=np.matrix(np.random.random((100,2)))+0.2
 data=np.concatenate((data,np.matrix(np.random.random((100,2)))+0.8))
-
-
 (no_of_examp,no_of_feat)=np.shape(data)
 no_of_comp=5
 # Random Initialization
