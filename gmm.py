@@ -73,9 +73,6 @@ for i in range(no_of_comp):
 plt.contour(X,Y,np.dot(Z.T,weights))
 plt.scatter(data[:,0],data[:,1])
 plt.show()
-
-
-plt.show()
 import pickle
 f=open('Data.pckl','wb')
 pickle.dump((means,cov,weights,data),f)
