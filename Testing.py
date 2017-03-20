@@ -2,6 +2,9 @@ import numpy as np
 from numpy import ndarray
 import math
 
+import time
+start_time = time.time()
+
 def gaussian(u,C,x,d):
     C = np.diag(np.diag(C))
     C_inv = np.linalg.inv(C)
@@ -15,11 +18,11 @@ def gaussian(u,C,x,d):
     return t9
 
 #READING TEST DATA AND PARAMETERS FROM FILE
-x_test = np.matrix(np.load('X_test_reduce.npy'))
-y_test = (np.matrix(np.load('y_test.npy'))).T
-weights = np.load('weights.npy')
-means = np.load('means.npy')
-Cov_Matrices = np.load('Cov_Matrices.npy')
+x_test = np.matrix(np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/X_test_reduce.npy'))
+y_test = (np.matrix(np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/y_test.npy'))).T
+weights = np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/weights.npy')
+means = np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/means.npy')
+Cov_Matrices = np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/Cov_Matrices.npy')
 
 #DECLARING USEFUL VARIABLES
 nt = x_test.shape[0]
@@ -46,4 +49,6 @@ accuracy = correct_classifications*100.0/nt
 
 print 'Correct Classifications = %d' % correct_classifications
 print 'Wrong Classifications = %d' % misclassifications
-print 'Correct_Classifications = %d' % accuracy
+print 'Accuracy in percentage = %f' % accuracy
+
+print("--- %s seconds ---" % (time.time() - start_time))
