@@ -1,5 +1,7 @@
 import numpy as np
 import math
+import scipy.misc
+import scipy.io as sio
 
 import time
 start_time = time.time()
@@ -40,25 +42,7 @@ y_train = np.concatenate((y1.T,y2.T,y3.T,y4.T,y5.T))
 y_train = np.array(y_train[:,0])
 y_train = np.array(y_train[:,0])
 
-#RANDOM SUBSET OF TRAINING DATA FOR LDA
-n = x_train.shape[0]
-indices = np.random.randint(0,n,30000)
-X = x_train[indices,:]
-y = y_train[indices]
-
-#PERFORMING LDA TO REDUCE FEATURE DIMENSION
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-lda = LinearDiscriminantAnalysis()
-model = lda.fit(X,y)
-x_train_reduce = model.transform(x_train)
-x_test_reduce = model.transform(x_test)
-
-#STORING THE REDUCED TRAINING AND TEST DATA
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/X_train_reduce.npy',x_train_reduce)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/X_test_reduce.npy',x_test_reduce)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/y_train.npy',y_train)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/y_test.npy',y_test)
-
-
-
-print("--- %s seconds ---" % (time.time() - start_time))
+sio.savemat('/home/rohan1297/Documents/PRML_CIFAR/Files/x_train.mat', {'vect':x_train})
+sio.savemat('/home/rohan1297/Documents/PRML_CIFAR/Files/x_test.mat', {'vect':x_test})
+sio.savemat('/home/rohan1297/Documents/PRML_CIFAR/Files/y_train.mat', {'vect':y_train})
+sio.savemat('/home/rohan1297/Documents/PRML_CIFAR/Files/y_test.mat', {'vect':y_test})

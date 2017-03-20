@@ -2,6 +2,9 @@ import numpy as np
 from numpy import ndarray
 import math
 
+import time
+start_time = time.time()
+
 def gaussian(u,C,x,d):
     C = np.diag(np.diag(C))
     C_inv = np.linalg.inv(C)
@@ -22,7 +25,7 @@ n = x_train.shape[0]            #no. of training examples
 d = x_train.shape[1]            #no. of features
 c = 10                          #no. of classes
 nc = n/c                        #no. of training examples in each class
-ng = 5                         #no. gaussians in GMM for each class
+ng = 3                         #no. gaussians in GMM for each class
 
 weights =  ndarray((ng,c), np.float64)
 means =  ndarray((d,ng,c), np.float64)
@@ -50,7 +53,7 @@ for m in range(0,c):
     alpha = np.ones(shape=(ng))/ng
 
     #TRAINING THE GMM
-    for iter in range(0,200):
+    for iter in range(0,0):
 
         #FINDING POSTERIOR PROBABILITIES FOR EACH TRAINING EXAMPLE BELONGING TO EACH GAUSSIAN FUNCITON
         temp1 = np.zeros(shape=(nc,ng))
@@ -91,4 +94,4 @@ np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/weights.npy',weights)
 np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/means.npy',means)
 np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/Cov_Matrices.npy',Cov_Matrices)
 
-print 'lolol'
+print("--- %s seconds ---" % (time.time() - start_time))

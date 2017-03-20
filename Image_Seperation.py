@@ -1,5 +1,6 @@
 import numpy as np
 import math
+import scipy.misc
 
 import time
 start_time = time.time()
@@ -40,25 +41,12 @@ y_train = np.concatenate((y1.T,y2.T,y3.T,y4.T,y5.T))
 y_train = np.array(y_train[:,0])
 y_train = np.array(y_train[:,0])
 
-#RANDOM SUBSET OF TRAINING DATA FOR LDA
 n = x_train.shape[0]
-indices = np.random.randint(0,n,30000)
-X = x_train[indices,:]
-y = y_train[indices]
-
-#PERFORMING LDA TO REDUCE FEATURE DIMENSION
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
-lda = LinearDiscriminantAnalysis()
-model = lda.fit(X,y)
-x_train_reduce = model.transform(x_train)
-x_test_reduce = model.transform(x_test)
-
-#STORING THE REDUCED TRAINING AND TEST DATA
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/X_train_reduce.npy',x_train_reduce)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/X_test_reduce.npy',x_test_reduce)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/y_train.npy',y_train)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/y_test.npy',y_test)
-
-
+for i in range(0,100):
+    temp1 = x_train[i,:]
+    temp2 = np.array(temp1)
+    temp3 = np.reshape(temp2, (32,32,3), order='F')
+    x = np.reshape(temp3, (32,32,3))
+    scipy.misc.imsave('/home/rohan1297/Documents/PRML_CIFAR/Images/image'+ str(i) + '.jpg', x)
 
 print("--- %s seconds ---" % (time.time() - start_time))
