@@ -86,6 +86,9 @@ for m in range(0,c):
     means[:,:,m] = u
     Cov_Matrices[:,:,:,m] = Cmat
 
-np.savez('parameters', weights = weights, means = means, Cov_Matrices = Cov_Matrices)
+#SAVING PARAMETERS INTO FILES
+np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/weights.npy',weights)
+np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/means.npy',means)
+np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/Cov_Matrices.npy',Cov_Matrices)
 
 print 'lolol'
