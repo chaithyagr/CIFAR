@@ -17,29 +17,33 @@ def gaussian(u,C,x,d):
     t9 = (1.0/t7) * math.exp(-t8/2)
     return t9
 
-x_train = np.matrix(np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/X_train_reduce.npy'))
-y_train = np.matrix(np.load('/home/rohan1297/Documents/PRML_CIFAR/Files/y_train.npy'))
+x_train = np.matrix(np.load('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data_Reduced/x_train_reduce.npy'))
+y_train = np.matrix(np.load('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data/y_train.npy'))
 
 #DECLARING USEFUL VARIABLES
 n = x_train.shape[0]            #no. of training examples
 d = x_train.shape[1]            #no. of features
 c = 10                          #no. of classes
 nc = n/c                        #no. of training examples in each class
-ng = 3                         #no. gaussians in GMM for each class
+ng = 3                        #no. gaussians in GMM for each class
 
-weights =  ndarray((ng,c), np.float64)
-means =  ndarray((d,ng,c), np.float64)
-Cov_Matrices =  ndarray((d,d,ng,c), np.float64)
+weights = ndarray((ng, c), np.float64)
+means = ndarray((d, ng, c), np.float64)
+Cov_Matrices = ndarray((d, d, ng, c), np.float64)
 
 #SEPERATING DATA INTO CLASSES
 x_sort = np.matrix(np.zeros(shape=(n,d)))
 for i in range(0,c):
     temp1 = np.matrix(np.where(y_train == i))
     temp2 = temp1[1,:]
-    temp3 = np.matrix(x_train[temp2, :])
+    temp3 = x_train[temp2, :]
     x_sort[i*nc:(i+1)*nc,:] = temp3
 
 x_train = x_sort
+
+
+
+#TRAINING THE GMM
 for m in range(0,c):
     x = x_train[m*nc:(m+1)*nc,:]
 
@@ -53,7 +57,7 @@ for m in range(0,c):
     alpha = np.ones(shape=(ng))/ng
 
     #TRAINING THE GMM
-    for iter in range(0,0):
+    for iter in range(0,3):
 
         #FINDING POSTERIOR PROBABILITIES FOR EACH TRAINING EXAMPLE BELONGING TO EACH GAUSSIAN FUNCITON
         temp1 = np.zeros(shape=(nc,ng))
@@ -89,9 +93,11 @@ for m in range(0,c):
     means[:,:,m] = u
     Cov_Matrices[:,:,:,m] = Cmat
 
-#SAVING PARAMETERS INTO FILES
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/weights.npy',weights)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/means.npy',means)
-np.save('/home/rohan1297/Documents/PRML_CIFAR/Files/Cov_Matrices.npy',Cov_Matrices)
+    # np.savez('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Parameters/N_Gaussians/n_gaussians_'+str(ng), weights=weights, means=means, Cov_Matrices=Cov_Matrices)
+
+# #SAVING PARAMETERS INTO FILES
+np.save('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Parameters/weights.npy',weights)
+np.save('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Parameters/means.npy',means)
+np.save('/media/rohan1297/New Volume1/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Parameters/Cov_Matrices.npy',Cov_Matrices)
 
 print("--- %s seconds ---" % (time.time() - start_time))

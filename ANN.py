@@ -32,15 +32,16 @@ def g(z):
 
 # LOADING FILES
 X_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data_Reduced/x_train_reduce.npy')
+#X_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data/x_train.npy') *1.0/255
 Y_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data/y_train.npy').T
 
 #DECLARING USEFUL VARIABLES
 n = X_temp.shape[0]
 d = X_temp.shape[1]
 c = 10
-L = 2
-S = np.array([d,c])
-alpha = 0.01                #learning rate
+L = 3
+S = np.array([d,11,c])
+alpha = 3.0                #learning rate
 
 #APPENDING BIAS FEATURE TO TRAINING EXAMPLES
 temp = np.ones((n,1))

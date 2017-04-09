@@ -10,16 +10,17 @@ start_time = time.time()
 def g(z):
     return 1/(1 + np.exp(-z))
 
+#X_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data/x_test.npy')
 X_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data_Reduced/x_test_reduce.npy')
 Y_temp = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Data/y_test.npy').T
 THETA = np.load('/media/rohan1297/New Volume/Documents/Academic Material/ECE/SEMESTER VI/PRML/PRML_CIFAR/Files/Parameters/parameters.npy')
 
 #DECLARING USEFUL VARIABLES
-nt = X_temp.shape[0]
-d = X_temp.shape[1]
-c = 10
-L = 2
-S = np.array([d,c])
+nt = X_temp.shape[0]            #number of test samples
+d = X_temp.shape[1]             #dimension of data
+c = 10                          #number of classes
+L = 3                           #number of layers
+S = np.array([d,11,c])
 
 #APPENDING BIAS FEATURE TO TRAINING EXAMPLES
 temp = np.ones((nt,1))
@@ -53,7 +54,23 @@ for i in range(0,nt):
         Z[l] = np.dot(THETA[l-1], A[l-1])
         A[l][1:] = g(Z[l])
 
-    temp = np.argmax(A[L-1])
+    temp = np.argmax(A[L-1][1:])
     Y_predict[i,temp] = 1
+
+class_accuracy = np.ndarray((c), np.float64)
+temp_y_predict = np.argmax(Y_predict, axis=1)        #converting vectored y into numbers from 0 to 9
+temp_y = np.argmax(Y, axis=1)                #converting vectored y into numbers from 0 to 9
+for i in range(0,c):
+    temp3 = (temp_y_predict == i) * 1
+    temp4 = (temp_y == i) * 1
+    class_accuracy[i] = np.sum(temp3 * temp4) *100.0 / (np.sum(temp4))
+    print "accuracy of class %d = %f " % (i, class_accuracy[i])
+
+correct_classifications = np.sum(Y * Y_predict)
+misclassifications = nt - correct_classifications
+accuracy = correct_classifications*100.0 / nt
+print "correct classifications = %d" % correct_classifications
+print "misclassifications = %d" % misclassifications
+print "accuracy = %f" % accuracy
 
 print("--- %s seconds ---" % (time.time() - start_time))
